@@ -39,7 +39,9 @@ import static com.hmdp.utils.RedisConstants.*;
 @Service
 public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IShopService {
 
-    // 线程池
+    /**
+     * 线程池
+     */
     private static final ExecutorService CACHE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
 
     @Resource
@@ -233,11 +235,11 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
     }
 
 
-        /**
-         * 获取锁
-         * @param key
-         * @return
-         */
+    /**
+     * 获取锁
+     * @param key
+     * @return
+     */
     private boolean tryLock(String key) {
         Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, "1", 10L, TimeUnit.SECONDS);
         return BooleanUtil.isTrue(flag);
@@ -250,6 +252,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
     private void unLock(String key) {
         stringRedisTemplate.delete(key);
     }
+
 
     public void saveShopToRedis(Long id, Long expireTime) {
         Shop shop = getById(id);
@@ -264,6 +267,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
 
     /**
+     * 更新店铺
      * 确保缓存与数据库中商户信息一致，使用事务
      * @param shop
      * @return
