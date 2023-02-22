@@ -31,6 +31,7 @@ public class SimpleRedisLock implements ILock {
 
     @Override
     public boolean tryLock(long timeoutSecond) {
+        // 线程标识
         String threadLockId = ID_PERFIX + Thread.currentThread().getId();
 
         Boolean success = stringRedisTemplate.opsForValue()
