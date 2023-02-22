@@ -4,6 +4,7 @@ import com.hmdp.service.impl.ShopServiceImpl;
 import com.hmdp.utils.RedisIdWorker;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
 import java.util.concurrent.CountDownLatch;
@@ -14,12 +15,21 @@ import java.util.concurrent.Executors;
 class HmDianPingApplicationTests {
 
     @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Resource
     private ShopServiceImpl shopService;
 
     @Resource
     private RedisIdWorker redisIdWorker;
 
     private ExecutorService es = Executors.newFixedThreadPool(500);
+
+
+    @Test
+    void testLogin() {
+
+    }
 
     @Test
     void testSaveShopService() {
